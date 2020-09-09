@@ -16,6 +16,7 @@ public class Player {
     private String name, guildName;
     private List<Char> characters;
     private List<Ship> ships;
+    private Squat arenaSquat;
 
     public static Player getPlayer(SwgohAPI api, int allyCode) throws ExecutionException, InterruptedException {
         JsonParser parser = new JsonParser();
@@ -61,6 +62,10 @@ public class Player {
                 ships.add(Ship.getShipFromJsonObject(jChar));
             }
         }
+
+        List<Char> arenaSquatChars = new LinkedList<>();
+        JsonObject squat = ((JsonObject) ((JsonObject) json.get("arena")).get("char"));
+        //TODO get arena squat and arena fleet
         return sortCharsandShips(ally, name, guild, level, grandArenaLifeTimePoints, roster, ships);
     }
 

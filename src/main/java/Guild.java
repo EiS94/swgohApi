@@ -25,6 +25,9 @@ public class Guild {
         }
         List<Player> players = new LinkedList<>();
         JsonArray array = parser.parse(api.getPlayers(allyCodes).get()).getAsJsonArray();
+        while (array.size() < allyCodes.size()) {
+            array = parser.parse(api.getPlayers(allyCodes).get()).getAsJsonArray();
+        }
         for (JsonElement el : array) {
             JsonObject o = (JsonObject) el;
             players.add(Player.getPlayerFromJsonObject(o));

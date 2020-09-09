@@ -7,9 +7,10 @@ public class Main {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
 
-        SwgohAPI api = new SwgohAPIBuilder().withUsername("eiS").withPassword("swgohAPI").build();
+        SwgohAPI api = new SwgohAPIBuilder().withUsername(ApiAccess.getApiUsername())
+                .withPassword(ApiAccess.getApiPassword()).build();
 
-        Guild g = Guild.getGuild(498229368, api);
+        Guild g = Guild.getGuild(589477137, api);
 
         //Player p = Player.getPlayer(api, 589477137);
 
