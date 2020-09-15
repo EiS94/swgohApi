@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import mods.stats.Stat;
 import mods.stats.StatType;
-import mods.stats.Tuple;
+import utilitys.Tuple;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -153,13 +153,13 @@ public class Mod {
 
     private static Mod createModfromJsonElement(JsonObject json, int counter) {
         if (json.get("stat") != null) {
-            Tuple t = createStatsfromJsonArray(json.get("stat").getAsJsonArray());
+            Tuple<Stat, List<Stat>> t = createStatsfromJsonArray(json.get("stat").getAsJsonArray());
             return new Mod(null, Place.values()[counter], json.get("level").getAsInt(), json.get("pips").getAsInt(),
-                    json.get("tier").getAsInt(), t.getPrimStat(), t.getSecStats());
+                    json.get("tier").getAsInt(), t.getFirstValue(), t.getSecondValue());
         } else return null;
     }
 
-    private static Tuple createStatsfromJsonArray(JsonArray json) {
+    private static Tuple<Stat, List<Stat>> createStatsfromJsonArray(JsonArray json) {
         JsonElement e = json.get(0);
         Stat primtStat = new Stat(getStatType(e.getAsJsonArray().get(0).getAsInt()),
                 e.getAsJsonArray().get(1).getAsDouble(), e.getAsJsonArray().get(2).getAsInt(), true);
@@ -169,7 +169,7 @@ public class Mod {
             secStats.add(new Stat(getStatType(e.getAsJsonArray().get(0).getAsInt()),
                     e.getAsJsonArray().get(1).getAsDouble(), e.getAsJsonArray().get(2).getAsInt(), false));
         }
-        return new Tuple(primtStat, secStats);
+        return new Tuple<>(primtStat, secStats);
     }
 
     private static StatType getStatType(int value) {

@@ -1,3 +1,5 @@
+package utilitys;
+
 public class ApiAccess {
 
     public static String getApiUsername() {

@@ -3,6 +3,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import help.swgoh.api.SwgohAPI;
+import utilitys.Tuple;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -118,6 +119,23 @@ public class Guild {
                 }
             }
             map.put(name.substring(5, name.length()-5), counter);
+        }
+        return map;
+    }
+
+    public Map<String, List<Tuple<Player, Char>>> getPlayersAbouveStarAndGear(SwgohAPI api, int minStars, int minGear) throws ExecutionException, InterruptedException {
+        Map<String, List<Tuple<Player, Char>>> map = new HashMap<>();
+        List<String> names = Player.getAllCharNames(api);
+        for (String name : names) {
+            List<Tuple<Player, Char>> players = new LinkedList<>();
+            for (Player p : this.players) {
+                for (Char c : p.getCharacters()) {
+                    if (c.getName().equals(name) && c.getGear() >= minGear && c.getStars() >= minStars) {
+                        players.add(new Tuple<>(p,c));
+                    }
+                }
+            }
+            map.put(name.substring(5, name.length()-5), players);
         }
         return map;
     }

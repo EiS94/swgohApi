@@ -1,5 +1,7 @@
 import help.swgoh.api.SwgohAPI;
 import help.swgoh.api.SwgohAPIBuilder;
+import utilitys.ApiAccess;
+import utilitys.Tuple;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -43,22 +45,12 @@ public class Main {
             int gear = Integer.parseInt(sc.nextLine());
             System.out.println("Which min stars?");
             int stars = Integer.parseInt(sc.nextLine());
-            Map<String, Integer> map = g.countCharsAbouveStarAndGear(api, stars, gear);
-            Object[] a = map.entrySet().toArray();
-            Arrays.sort(a, new Comparator() {
-                public int compare(Object o1, Object o2) {
-                    return ((Map.Entry<String, Integer>) o2).getValue()
-                            .compareTo(((Map.Entry<String, Integer>) o1).getValue());
-                }
-            });
-            for (Object e : a) {
-                System.out.println(((Map.Entry<String, Integer>) e).getKey() + " : "
-                        + ((Map.Entry<String, Integer>) e).getValue());
-            }
+            Map<String, List<Tuple<Player, Char>>> map = g.getPlayersAbouveStarAndGear(api, stars, gear);
+            map = Utils.sortByListSize(map);
+            System.out.println("bla");
         }
 
     }
-
 
 
 }
