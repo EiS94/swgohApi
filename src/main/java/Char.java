@@ -4,6 +4,7 @@ import mods.Mod;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Char {
 
@@ -125,7 +126,24 @@ public class Char {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Char aChar = (Char) o;
+        return Objects.equals(name, aChar.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+    @Override
     public String toString() {
+        return stars + "* " +  name + ", Level: " + level + ", Gear: " + gear;
+    }
+
+    public String toStringWithMods() {
         return stars + "* " +  name + ", Level: " + level + ", Gear: " + gear + "\n" + mods;
     }
 }

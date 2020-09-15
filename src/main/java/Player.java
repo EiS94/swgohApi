@@ -17,6 +17,16 @@ public class Player {
     private List<Char> characters;
     private List<Ship> ships;
     private Squat arenaSquat;
+    private Fleet arenaFleet;
+
+    public static List<String> getAllCharNames(SwgohAPI api) throws ExecutionException, InterruptedException {
+        Player topPlayer = getPlayer(api, 979382945);
+        List<String> names = new LinkedList<>();
+        for (Char c : topPlayer.getCharacters()) {
+            names.add(c.getName());
+        }
+        return names;
+    }
 
     public static Player getPlayer(SwgohAPI api, int allyCode) throws ExecutionException, InterruptedException {
         JsonParser parser = new JsonParser();
@@ -41,7 +51,7 @@ public class Player {
                 ships.add(Ship.getShipFromJsonObject(jChar));
             }
         }
-        return sortCharsandShips(ally, name, guild, level, grandArenaLifeTimePoints, roster, ships);
+        return sortCharsandShips(ally, name, guild, level, grandArenaLifeTimePoints, roster, ships, null);
     }
 
     public static Player getPlayerFromJsonObject(JsonObject json) {
@@ -63,13 +73,13 @@ public class Player {
             }
         }
 
-        List<Char> arenaSquatChars = new LinkedList<>();
-        JsonObject squat = ((JsonObject) ((JsonObject) json.get("arena")).get("char"));
-        //TODO get arena squat and arena fleet
-        return sortCharsandShips(ally, name, guild, level, grandArenaLifeTimePoints, roster, ships);
+        Squat squat = Squat.getSquatFromJsonObject ((JsonObject) ((JsonObject) json.get("arena")).get("char"), roster);
+        //TODO get arena fleet
+        return sortCharsandShips(ally, name, guild, level, grandArenaLifeTimePoints, roster, ships, squat);
     }
 
-    private static Player sortCharsandShips(int ally, String name, String guild, int level, int grandArenaLifeTimePoints, List<Char> roster, List<Ship> ships) {
+    private static Player sortCharsandShips(int ally, String name, String guild, int level, int grandArenaLifeTimePoints,
+                                            List<Char> roster, List<Ship> ships, Squat squat) {
         roster.sort(Comparator.comparing(Char::getGalacticPower).reversed());
         List<Char> galacticLegends = new LinkedList<>();
         for (Char c : roster) {
@@ -77,6 +87,7 @@ public class Player {
                 galacticLegends.add(c);
             }
         }
+        //make sure, that galactic legends are on top
         for (Char c : galacticLegends) {
             roster.remove(c);
         }
@@ -85,7 +96,7 @@ public class Player {
             roster.add(0, c);
         }
         ships.sort(Comparator.comparing(Ship::getGp).reversed());
-        return new Player(ally, level, grandArenaLifeTimePoints, name, guild, roster, ships);
+        return new Player(ally, level, grandArenaLifeTimePoints, name, guild, roster, ships, squat, null);
     }
 
     public Player(int allyCode, int level, int grandArenaLifeTimePoints, String name, String guildName, List<Char> characters, List<Ship> ships) {
@@ -96,6 +107,19 @@ public class Player {
         this.guildName = guildName;
         this.characters = characters;
         this.ships = ships;
+    }
+
+    public Player(int allyCode, int level, int grandArenaLifeTimePoints, String name, String guildName,
+                  List<Char> characters, List<Ship> ships, Squat arenaSquat, Fleet arenaFleet) {
+        this.allyCode = allyCode;
+        this.level = level;
+        this.grandArenaLifeTimePoints = grandArenaLifeTimePoints;
+        this.name = name;
+        this.guildName = guildName;
+        this.characters = characters;
+        this.ships = ships;
+        this.arenaSquat = arenaSquat;
+        this.arenaFleet = arenaFleet;
     }
 
     public int getAllyCode() {
@@ -152,6 +176,22 @@ public class Player {
 
     public void setShips(List<Ship> ships) {
         this.ships = ships;
+    }
+
+    public Squat getArenaSquat() {
+        return arenaSquat;
+    }
+
+    public void setArenaSquat(Squat arenaSquat) {
+        this.arenaSquat = arenaSquat;
+    }
+
+    public Fleet getArenaFleet() {
+        return arenaFleet;
+    }
+
+    public void setArenaFleet(Fleet arenaFleet) {
+        this.arenaFleet = arenaFleet;
     }
 
     @Override
