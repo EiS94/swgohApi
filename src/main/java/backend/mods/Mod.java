@@ -1,11 +1,14 @@
-package mods;
+package backend.mods;
 
+
+import backend.Place;
+import backend.Tuple;
+import backend.Type;
+import backend.mods.stats.Stat;
+import backend.mods.stats.StatType;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import mods.stats.Stat;
-import mods.stats.StatType;
-import utilitys.Tuple;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,7 +17,7 @@ public class Mod {
 
     /**
      * @param id = own id
-     * @param set = Type of mods, 1= Health, 4 = Speed, ... TODO
+     * @param set = Type of backend.mods, 1= Health, 4 = Speed, ... TODO
      * @param level = modLevel
      * @param pips = color: white = 1, green = 2, blue = 3, purple = 4, gold = 5
      * @param tier = "seltenheit" 1-6

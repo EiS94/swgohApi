@@ -1,5 +1,7 @@
+package backend;
+
 import com.google.gson.JsonObject;
-import mods.Mod;
+import backend.mods.Mod;
 
 import java.util.LinkedList;
 import java.util.List;

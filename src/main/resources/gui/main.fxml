@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainController">
+   <children>
+      <ComboBox id="dropdown" fx:id="dropdown" layoutX="204.0" layoutY="164.0" prefHeight="26.0" prefWidth="222.0" />
+      <HBox layoutX="133.0" layoutY="24.0" prefHeight="42.0" prefWidth="458.0">
+         <children>
+            <TextArea blendMode="DARKEN" cache="true" cacheHint="QUALITY" depthTest="DISABLE" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" pickOnBounds="false" prefHeight="20.0" prefWidth="95.0" text="AllyCode:" />
+            <TextField fx:id="allyCode" prefHeight="26.0" prefWidth="132.0" promptText="589477137" text="589477137">
+               <HBox.margin>
+                  <Insets left="3.0" right="3.0" />
+               </HBox.margin></TextField>
+            <Button fx:id="btnGo" mnemonicParsing="false" onAction="#getGuildInfos" text="Go" />
+            <ProgressBar fx:id="progress" prefHeight="20.0" prefWidth="125.0" progress="0.0">
+               <HBox.margin>
+                  <Insets left="40.0" top="2.0" />
+               </HBox.margin></ProgressBar>
+         </children>
+      </HBox>
+      <TextArea fx:id="guildInfo" blendMode="DARKEN" editable="false" layoutX="103.0" layoutY="71.0" prefHeight="42.0" prefWidth="423.0" />
+      <HBox layoutX="112.0" layoutY="122.0" prefHeight="42.0" prefWidth="376.0">
+         <children>
+            <TextField accessibleRole="TEXT" editable="false" prefHeight="26.0" prefWidth="92.0" text="min. Stars:">
+               <HBox.margin>
+                  <Insets right="3.0" />
+               </HBox.margin>
+            </TextField>
+            <ComboBox fx:id="dropdownStars" onAction="#sortDropdown" prefHeight="26.0" prefWidth="89.0" />
+            <TextField accessibleRole="TEXT" editable="false" layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="85.0" text="min. Gear:">
+               <HBox.margin>
+                  <Insets left="10.0" right="3.0" />
+               </HBox.margin>
+            </TextField>
+            <ComboBox fx:id="dropdownGear" layoutX="104.0" layoutY="10.0" onAction="#sortDropdown" prefHeight="26.0" prefWidth="89.0" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

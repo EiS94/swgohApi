@@ -1,3 +1,5 @@
+package backend;
+
 import java.util.List;
 
 public class Fleet {
@@ -54,7 +56,7 @@ public class Fleet {
     }
 
     public String getFullInfo() {
-        StringBuilder result = new StringBuilder("GP: " + gp + "\nCapital Ship: " + capitalShip + "\nStarting Ships:\n");
+        StringBuilder result = new StringBuilder("GP: " + gp + "\nCapital backend.Ship: " + capitalShip + "\nStarting Ships:\n");
         for (Ship s : startingShips) {
             result.append(s).append("\n");
         }
@@ -67,6 +69,6 @@ public class Fleet {
 
     @Override
     public String toString() {
-        return "Capital Ship: " + capitalShip + " Reinforcment count: " + reinforcment.size() + "\nGP: " + gp;
+        return "Capital backend.Ship: " + capitalShip + " Reinforcment count: " + reinforcment.size() + "\nGP: " + gp;
     }
 }

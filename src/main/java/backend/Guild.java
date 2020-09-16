@@ -1,9 +1,12 @@
+package backend;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import gui.MainController;
 import help.swgoh.api.SwgohAPI;
-import utilitys.Tuple;
+import javafx.concurrent.Task;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -11,6 +14,10 @@ import java.util.concurrent.ExecutionException;
 public class Guild {
 
     List<Player> players;
+
+    public static double counter = 0;
+    public static int size = 1;
+    public static double prog = 0;
 
     public static Guild getGuild(int allyCode, SwgohAPI api) throws ExecutionException, InterruptedException {
         JsonParser parser = new JsonParser();
@@ -22,6 +29,7 @@ public class Guild {
             JsonObject o = (JsonObject) el;
             allyCodes.add(o.get("allyCode").getAsInt());
         }
+        size = allyCodes.size();
         List<Player> players = new LinkedList<>();
         JsonArray array = parser.parse(api.getPlayers(allyCodes).get()).getAsJsonArray();
         while (array.size() < allyCodes.size()) {
@@ -30,7 +38,9 @@ public class Guild {
         for (JsonElement el : array) {
             JsonObject o = (JsonObject) el;
             players.add(Player.getPlayerFromJsonObject(o));
+            counter++;
         }
+        counter = 0;
         players.sort(Comparator.comparing(Player::getGrandArenaLifeTimePoints).reversed());
         return new Guild(players);
     }
@@ -140,4 +150,20 @@ public class Guild {
         return map;
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+    public static class ProgressTask implements Runnable {
+        @Override
+        public void run() {
+            while (Guild.counter <= size) {
+                prog = counter/size;
+            }
+        }
+    }
 }

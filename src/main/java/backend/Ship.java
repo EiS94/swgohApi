@@ -1,3 +1,5 @@
+package backend;
+
 import com.google.gson.JsonObject;
 
 public class Ship {

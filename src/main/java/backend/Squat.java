@@ -1,7 +1,8 @@
+package backend;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.graalvm.compiler.api.replacements.Snippet;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package mods.stats;
+package backend.mods.stats;
 
 import java.text.DecimalFormat;
 
